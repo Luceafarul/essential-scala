@@ -12,11 +12,11 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
   }
 
   test("validate Film and Director class implementation") {
-    val eastwood = new Director("Clint", "Eastwood", 1930)
-    val mcTiernan = new Director("John", "McTiernan", 1951)
-    val nolan = new Director("Christopher", "Nolan", 1970)
-    val invictus = new Film("Invictus", 2009, 7.4, eastwood)
-    val dieHard = new Film("Die Hard", 1988, 8.3, mcTiernan)
+    val eastwood = Director("Clint", "Eastwood", 1930)
+    val mcTiernan = Director("John", "McTiernan", 1951)
+    val nolan = Director("Christopher", "Nolan", 1970)
+    val invictus = Film("Invictus", 2009, 7.4, eastwood)
+    val dieHard = Film("Die Hard", 1988, 8.3, mcTiernan)
 
     eastwood.yearOfBirth shouldBe 1930
     dieHard.director.name shouldBe "John McTiernan"
@@ -24,15 +24,15 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
   }
 
   test("copy method of Film without parameters should return a copy of instance") {
-    val nolan = new Director("Christopher", "Nolan", 1970)
-    val inception = new Film("Inception", 2010, 8.8, nolan)
+    val nolan = Director("Christopher", "Nolan", 1970)
+    val inception = Film("Inception", 2010, 8.8, nolan)
 
     inception.copy().copy().copy() equals inception
   }
 
   test("copy method of Film with changed parameters should return updated copy") {
-    val eastwood = new Director("Clint", "Eastwood", 1930)
-    val highPlainsDrifter = new Film("High Plains Drifter", 1973, 7.7, eastwood)
+    val eastwood = Director("Clint", "Eastwood", 1930)
+    val highPlainsDrifter = Film("High Plains Drifter", 1973, 7.7, eastwood)
 
     val highPlainsDrifterCopy = highPlainsDrifter.copy(name = "L'homme des hautes plaines")
 
@@ -41,15 +41,42 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
     highPlainsDrifterCopy.imdbRating shouldBe highPlainsDrifter.imdbRating
     highPlainsDrifterCopy.director shouldBe highPlainsDrifter.director
 
-    val mcTiernan = new Director("John", "McTiernan", 1951)
-    val thomasCrownAffair = new Film("The Thomas Crown Affair", 1999, 6.8, mcTiernan)
+    val mcTiernan = Director("John", "McTiernan", 1951)
+    val thomasCrownAffair = Film("The Thomas Crown Affair", 1999, 6.8, mcTiernan)
 
     val thomasCrownAffairCopy = thomasCrownAffair.copy(yearOfRelease = 1968, director = new Director("Norman", "Jewison", 1926))
 
     thomasCrownAffairCopy.name shouldBe thomasCrownAffair.name
     thomasCrownAffairCopy.yearOfRelease shouldBe 1968
     thomasCrownAffairCopy.imdbRating shouldBe thomasCrownAffair.imdbRating
-    thomasCrownAffairCopy.director equals new Director("Norman", "Jewison", 1926)
+    thomasCrownAffairCopy.director equals Director("Norman", "Jewison", 1926)
+  }
+
+  test("older director should return oldest of two directors") {
+    val eastwood = Director("Clint", "Eastwood", 1930)
+    val mcTiernan = Director("John", "McTiernan", 1951)
+
+    Director.older(eastwood, mcTiernan) shouldBe eastwood
+  }
+
+  test("highestRating should return highest imdb rating of two films") {
+    val nolan = Director("Christopher", "Nolan", 1970)
+    val inception = Film("Inception", 2010, 8.8, nolan)
+
+    val mcTiernan = Director("John", "McTiernan", 1951)
+    val dieHard = Film("Die Hard", 1988, 8.3, mcTiernan)
+
+    Film.highestRating(inception, dieHard) shouldBe inception
+  }
+
+  test("oldestDirectorAtTheTime should return director of two films who was oldest the time respective time of filming") {
+    val nolan = Director("Christopher", "Nolan", 1970)
+    val inception = Film("Inception", 2010, 8.8, nolan)
+
+    val mcTiernan = Director("John", "McTiernan", 1951)
+    val dieHard = Film("Die Hard", 1988, 8.3, mcTiernan)
+
+    Film.oldestDirectorAtTheTime(inception, dieHard) shouldBe nolan
   }
 
   test("Counter without parameter should start from 1") {
@@ -69,5 +96,12 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
     val counter = new Counter
 
     counter.adjust(adder).count shouldBe 11
+  }
+
+  test("Person should be created via apply method") {
+    val person = Person("Han Solo")
+
+    person.firstName shouldBe "Han"
+    person.lastName shouldBe "Solo"
   }
 }
