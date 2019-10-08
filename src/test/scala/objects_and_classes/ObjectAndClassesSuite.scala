@@ -14,13 +14,12 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
   test("validate Film and Director class implementation") {
     val eastwood = Director("Clint", "Eastwood", 1930)
     val mcTiernan = Director("John", "McTiernan", 1951)
-    val nolan = Director("Christopher", "Nolan", 1970)
     val invictus = Film("Invictus", 2009, 7.4, eastwood)
     val dieHard = Film("Die Hard", 1988, 8.3, mcTiernan)
 
     eastwood.yearOfBirth shouldBe 1930
     dieHard.director.name shouldBe "John McTiernan"
-    invictus.isDirectedBy(nolan) shouldBe false
+    invictus.isDirectedBy(mcTiernan) shouldBe false
   }
 
   test("copy method of Film without parameters should return a copy of instance") {
@@ -103,5 +102,18 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
 
     person.firstName shouldBe "Han"
     person.lastName shouldBe "Solo"
+  }
+
+  test("Dad's rate method should get Eastwood's films rating 10, McTiernan 7 and other 3") {
+    val eastwood = Director("Clint", "Eastwood", 1930)
+    val mcTiernan = Director("John", "McTiernan", 1951)
+    val nolan = Director("Christopher", "Nolan", 1970)
+    val invictus = Film("Invictus", 2009, 7.4, eastwood)
+    val dieHard = Film("Die Hard", 1988, 8.3, mcTiernan)
+    val inception = Film("Inception", 2010, 8.8, nolan)
+
+    Dad.rate(invictus) shouldBe 10.0
+    Dad.rate(dieHard) shouldBe 7.0
+    Dad.rate(inception) shouldBe 3.0
   }
 }

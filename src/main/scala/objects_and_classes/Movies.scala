@@ -21,3 +21,11 @@ object Film {
     if (f1.directorsAge > f2.directorsAge) f1.director
     else f2.director
 }
+
+object Dad {
+  def rate(film: Film): Double = film.director match {
+    case Director("Clint", "Eastwood", _) => 10.0
+    case Director("John", "McTiernan", _) => 7.0
+    case _ => 3.0
+  }
+}
