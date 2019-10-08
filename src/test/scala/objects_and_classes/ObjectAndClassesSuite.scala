@@ -4,8 +4,8 @@ import org.scalatest.{FunSuite, Matchers}
 
 class ObjectAndClassesSuite extends FunSuite with Matchers {
   test("willServe should return true if the cat's favorite food is chips") {
-    val catOne = new Cat("Oswald", "Black", "Milk")
-    val catTwo = new Cat("Henderson", "Ginger", "Chips")
+    val catOne = Cat("Oswald", "Black", "Milk")
+    val catTwo = Cat("Henderson", "Ginger", "Chips")
 
     ChipShop.willServe(catOne) shouldBe false
     ChipShop.willServe(catTwo) shouldBe true
@@ -80,22 +80,22 @@ class ObjectAndClassesSuite extends FunSuite with Matchers {
   }
 
   test("Counter without parameter should start from 1") {
-    val counter = new Counter
+    val counter = Counter()
 
-    counter.count shouldBe 1
+    counter.count shouldBe 0
   }
 
   test("inc and dec method of Counter should be increment and decrement count respectively") {
-    val counter = new Counter(10)
+    val counter = Counter(10)
 
     counter.inc.dec.inc.inc.count shouldBe 12
   }
 
   test("adjust method should be increment Counter by Adder amount") {
     val adder = new Adder(10)
-    val counter = new Counter
+    val counter = Counter()
 
-    counter.adjust(adder).count shouldBe 11
+    counter.adjust(adder).count shouldBe 10
   }
 
   test("Person should be created via apply method") {
