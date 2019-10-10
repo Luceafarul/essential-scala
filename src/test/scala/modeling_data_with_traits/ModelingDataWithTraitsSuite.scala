@@ -1,7 +1,7 @@
 package modeling_data_with_traits
 
-import modeling_data_with_traits.sealed_traits.Draw
-import modeling_data_with_traits.traits.{Cat, Circle, Lion, Panther, Rectangle, Square, Tiger}
+import modeling_data_with_traits.sealed_traits.{CustomColor, Draw, Green, Yellow}
+import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
 
 class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
@@ -18,9 +18,10 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
   }
 
   test("Shape subtypes should be correct evaluate perimeter and area") {
-    val circle = Circle(5)
-    val square = Square(7)
-    val rectangle = Rectangle(5, 7)
+    val customColor = CustomColor(3, 3, 3)
+    val circle = Circle(5, customColor)
+    val square = Square(7, customColor)
+    val rectangle = Rectangle(5, 7, customColor)
 
     circle.perimeter shouldBe 2 * 5 * Math.PI
     circle.area shouldBe 5 * 5 * Math.PI
@@ -33,12 +34,12 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
   }
 
   test("Draw object should return appropriate shapes describe") {
-    val circle = Circle(5)
-    val square = Square(7)
-    val rectangle = Rectangle(5, 7)
+    val circle = Circle(5, CustomColor(3, 3, 3))
+    val square = Square(7, Yellow)
+    val rectangle = Rectangle(5, 7, Green)
 
-    Draw(square) shouldBe "A square with size 7.0cm"
-    Draw(circle) shouldBe "A circle with radius 5.0cm"
-    Draw(rectangle) shouldBe "A rectangle of width 5.0cm and height 7.0cm"
+    Draw(circle) shouldBe "A light circle with radius 5.0cm"
+    Draw(square) shouldBe "A yellow square with size 7.0cm"
+    Draw(rectangle) shouldBe "A green rectangle of width 5.0cm and height 7.0cm"
   }
 }
