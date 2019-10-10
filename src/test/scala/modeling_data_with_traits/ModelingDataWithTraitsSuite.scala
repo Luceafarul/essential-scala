@@ -1,5 +1,6 @@
 package modeling_data_with_traits
 
+import modeling_data_with_traits.sealed_traits.Draw
 import modeling_data_with_traits.traits.{Cat, Circle, Lion, Panther, Rectangle, Square, Tiger}
 import org.scalatest.{FunSuite, Matchers}
 
@@ -29,5 +30,15 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
 
     rectangle.perimeter shouldBe (5 + 7) * 2
     rectangle.area shouldBe 5 * 7
+  }
+
+  test("Draw object should return appropriate shapes describe") {
+    val circle = Circle(5)
+    val square = Square(7)
+    val rectangle = Rectangle(5, 7)
+
+    Draw(square) shouldBe "A square with size 7.0cm"
+    Draw(circle) shouldBe "A circle with radius 5.0cm"
+    Draw(rectangle) shouldBe "A rectangle of width 5.0cm and height 7.0cm"
   }
 }
