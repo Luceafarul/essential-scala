@@ -1,6 +1,6 @@
 package modeling_data_with_traits
 
-import modeling_data_with_traits.sealed_traits.{CustomColor, Draw, Green, Yellow}
+import modeling_data_with_traits.sealed_traits.{CustomColor, Draw, Finite, Green, Infinite, Yellow, divide}
 import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
 
@@ -41,5 +41,13 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
     Draw(circle) shouldBe "A light circle with radius 5.0cm"
     Draw(square) shouldBe "A yellow square with size 7.0cm"
     Draw(rectangle) shouldBe "A green rectangle of width 5.0cm and height 7.0cm"
+  }
+
+  test("divide(3, 2) should be Finite(1.5)") {
+    divide(3, 2) shouldBe Finite(1.5)
+  }
+
+  test("divide(2, 0) should be Infinite") {
+    divide(2, 0) shouldBe Infinite
   }
 }
