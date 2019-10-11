@@ -69,4 +69,28 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
 
     Calculation.divide(7, 0) shouldBe Fail("division by zero")
   }
+
+  test("Structural recursion using polymorphism dinner method should be return food") {
+    val cat = Cat("white", "chips")
+    val lion = Lion("gray", 7)
+    val tiger = Tiger("black and yellow")
+    val panther = Panther("black")
+
+    cat.dinner shouldBe CatFood("chips")
+    lion.dinner shouldBe Antelope
+    tiger.dinner shouldBe TigerFood
+    panther.dinner shouldBe Licorice
+  }
+
+  test("Structural recursion using pattern matching dinner method should be return food") {
+    val cat = Cat("white", "chips")
+    val lion = Lion("gray", 7)
+    val tiger = Tiger("black and yellow")
+    val panther = Panther("black")
+
+    cat.dinners shouldBe CatFood("chips")
+    lion.dinners shouldBe Antelope
+    tiger.dinners shouldBe TigerFood
+    panther.dinners shouldBe Licorice
+  }
 }
