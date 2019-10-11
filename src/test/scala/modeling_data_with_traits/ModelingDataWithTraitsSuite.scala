@@ -1,5 +1,6 @@
 package modeling_data_with_traits
 
+import modeling_data_with_traits.algebraic_data_types.{Calculation, Fail, Succeed, TrafficLight}
 import modeling_data_with_traits.sealed_traits.{CustomColor, Draw, Finite, Green, Infinite, Yellow, divide}
 import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
@@ -49,5 +50,23 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
 
   test("divide(2, 0) should be Infinite") {
     divide(2, 0) shouldBe Infinite
+  }
+
+  test("TrafficLight should be appropriate action by color") {
+    import modeling_data_with_traits.algebraic_data_types.{Red, Yellow, Green}
+
+    val red = Red
+    val yellow = Yellow
+    val green = Green
+
+    TrafficLight.action(red) shouldBe "stop"
+    TrafficLight.action(yellow) shouldBe "ready"
+    TrafficLight.action(green) shouldBe "go"
+  }
+
+  test("divide method from Calculation should return Succeed or Fail") {
+    Calculation.divide(4, 2) shouldBe Succeed(2)
+
+    Calculation.divide(7, 0) shouldBe Fail("division by zero")
   }
 }
