@@ -1,7 +1,7 @@
 package modeling_data_with_traits
 
 import modeling_data_with_traits.algebraic_data_types.{Calculation, Calculator, Failure, Success}
-import modeling_data_with_traits.recursive_data.{End, IntListOps, Pair}
+import modeling_data_with_traits.recursive_data.{End, IntListOps, Leaf, Node, Pair, TreeOps}
 import modeling_data_with_traits.sealed_traits._
 import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
@@ -165,5 +165,19 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
     IntListOps.double(list) shouldBe Pair(2, Pair(4, Pair(6, Pair(8, Pair(10, End)))))
     IntListOps.double(list.tail) shouldBe Pair(4, Pair(6, Pair(8, Pair(10, End))))
     IntListOps.double(End) shouldBe End
+  }
+
+  test("Tree's sum should return sum of all nodes") {
+    val tree = Node(Leaf(3), Node(Leaf(5), Node(Leaf(7), Leaf(9))))
+
+    TreeOps.sum(tree) shouldBe 24
+    tree.sum shouldBe 24
+  }
+
+  test("Tree's double should return doubled entire of tree") {
+    val tree = Node(Leaf(3), Node(Leaf(5), Node(Leaf(7), Leaf(9))))
+
+    TreeOps.double(tree) shouldBe Node(Leaf(6), Node(Leaf(10), Node(Leaf(14), Leaf(18))))
+    tree.double shouldBe Node(Leaf(6), Node(Leaf(10), Node(Leaf(14), Leaf(18))))
   }
 }
