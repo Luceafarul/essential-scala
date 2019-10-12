@@ -1,6 +1,6 @@
 package modeling_data_with_traits
 
-import modeling_data_with_traits.algebraic_data_types.{Calculation, Fail, Succeed}
+import modeling_data_with_traits.algebraic_data_types.{Calculation, Calculator, Failure, Success}
 import modeling_data_with_traits.sealed_traits._
 import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
@@ -52,6 +52,34 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
     divide(2, 0) shouldBe Infinite
   }
 
+  test("plus (+) method should return Success with result if in argument passed Success") {
+    Calculator.+(Success(10), 7) shouldBe Success(17)
+  }
+
+  test("plus (+) method should return Failure with message if in argument passed Failure") {
+    Calculator.+(Failure("oh no..."), 10) shouldBe Failure("oh no...")
+  }
+
+  test("minus (-) method should return Success with result if in argument passed Success") {
+    Calculator.-(Success(10), 10) shouldBe Success(0)
+  }
+
+  test("minus (-) method should return Failure with message if in argument passed Failure") {
+    Calculator.-(Failure("oh no..."), 10) shouldBe Failure("oh no...")
+  }
+
+  test("division (/) method should return Success with result if in argument passed Success") {
+    Calculator./(Success(20), 10) shouldBe Success(2)
+  }
+
+  test("division (/) method should return Failure with message if in argument passed Failure") {
+    Calculator./(Failure("oh no..."), 10) shouldBe Failure("oh no...")
+  }
+
+  test("division (/) method should return Failed(division by zero) if divisor is 0") {
+    Calculator./(Success(10), 0) shouldBe Failure("division by zero")
+  }
+
   test("TrafficLight's action method should be appropriate action by color") {
     import modeling_data_with_traits.algebraic_data_types.{Green, Red, Yellow}
 
@@ -77,9 +105,9 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
   }
 
   test("divide method from Calculation should return Succeed or Fail") {
-    Calculation.divide(4, 2) shouldBe Succeed(2)
+    Calculation.divide(4, 2) shouldBe Success(2)
 
-    Calculation.divide(7, 0) shouldBe Fail("division by zero")
+    Calculation.divide(7, 0) shouldBe Failure("division by zero")
   }
 
   test("Structural recursion using polymorphism dinner method should be return food") {
