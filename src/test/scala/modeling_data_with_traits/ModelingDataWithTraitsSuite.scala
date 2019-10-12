@@ -135,11 +135,35 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
     panther.dinners shouldBe Licorice
   }
 
-  test("sum should be return sum of entire IntList") {
-    val intList = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
+  test("sum should return sum of entire IntList") {
+    val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
 
-    IntListOps.sum(intList) shouldBe 15
-    IntListOps.sum(intList.tail) shouldBe 14
+    IntListOps.sum(list) shouldBe 15
+    IntListOps.sum(list.tail) shouldBe 14
     IntListOps.sum(End) shouldBe 0
+  }
+
+  test("length should return appropriate IntList length") {
+    val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
+
+    list.length shouldBe 5
+    list.tail.length shouldBe 4
+    End.length shouldBe 0
+  }
+
+  test("product should return product of entire IntList") {
+    val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
+
+    IntListOps.product(list) shouldBe 120
+    IntListOps.product(list.tail) shouldBe 120
+    IntListOps.product(End) shouldBe 1
+  }
+
+  test("double should return IntList with doubled entire") {
+    val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
+
+    IntListOps.double(list) shouldBe Pair(2, Pair(4, Pair(6, Pair(8, Pair(10, End)))))
+    IntListOps.double(list.tail) shouldBe Pair(4, Pair(6, Pair(8, Pair(10, End))))
+    IntListOps.double(End) shouldBe End
   }
 }
