@@ -1,6 +1,7 @@
 package modeling_data_with_traits
 
 import modeling_data_with_traits.algebraic_data_types.{Calculation, Calculator, Failure, Success}
+import modeling_data_with_traits.recursive_data.{End, IntListOps, Pair}
 import modeling_data_with_traits.sealed_traits._
 import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
@@ -132,5 +133,13 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
     lion.dinners shouldBe Antelope
     tiger.dinners shouldBe TigerFood
     panther.dinners shouldBe Licorice
+  }
+
+  test("sum should be return sum of entire IntList") {
+    val intList = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
+
+    IntListOps.sum(intList) shouldBe 15
+    IntListOps.sum(intList.tail) shouldBe 14
+    IntListOps.sum(End) shouldBe 0
   }
 }
