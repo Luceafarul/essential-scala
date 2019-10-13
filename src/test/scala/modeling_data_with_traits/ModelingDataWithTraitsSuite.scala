@@ -1,7 +1,8 @@
 package modeling_data_with_traits
 
 import modeling_data_with_traits.algebraic_data_types.{Calculation, Calculator, Failure, Success}
-import modeling_data_with_traits.recursive_data.{End, IntListOps, Leaf, Node, Pair, TreeOps}
+import modeling_data_with_traits.extended_examples._
+import modeling_data_with_traits.recursive_data._
 import modeling_data_with_traits.sealed_traits._
 import modeling_data_with_traits.traits._
 import org.scalatest.{FunSuite, Matchers}
@@ -179,5 +180,53 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
 
     TreeOps.double(tree) shouldBe Node(Leaf(6), Node(Leaf(10), Node(Leaf(14), Leaf(18))))
     tree.double shouldBe Node(Leaf(6), Node(Leaf(10), Node(Leaf(14), Leaf(18))))
+  }
+
+  test("Expression Addition should eval sum of expression") {
+    import extended_examples.Success
+
+    val sum = Addition(Number(7.2), Addition(Number(2.8), Number(3)))
+
+    sum.eval shouldBe Success(13.0)
+  }
+
+  test("Expression Subtraction should eval subtract of expression") {
+    import extended_examples.Success
+
+    val subtract = Subtraction(Number(7.2), Subtraction(Number(3.2), Number(3)))
+
+    subtract.eval shouldBe Success(7.0)
+  }
+
+  test("Expression Division should eval division of expression") {
+    import extended_examples.Success
+
+    val div = Division(Number(21), Addition(Number(3), Number(3)))
+
+    div.eval shouldBe Success(3.5)
+  }
+
+  test("Division by zero should failure eval of expression") {
+    import extended_examples.Failure
+
+    val div = Division(Number(21), Addition(Number(0), Number(0)))
+
+    div.eval shouldBe Failure("Division by zero")
+  }
+
+  test("Expression SquareRoot should eval sqrt of expression") {
+    import extended_examples.Success
+
+    val sqrt = SquareRoot(Subtraction(Number(100), Number(51)))
+
+    sqrt.eval shouldBe Success(7.0)
+  }
+
+  test("SquareRoot of -1 should eval failure of expression") {
+    import extended_examples.Failure
+
+    val sqrt = SquareRoot(Subtraction(Number(0), Number(1)))
+
+    sqrt.eval shouldBe Failure("Square root of negative number: -1.0")
   }
 }
