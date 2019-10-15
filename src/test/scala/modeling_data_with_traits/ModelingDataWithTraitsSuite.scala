@@ -229,4 +229,26 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
 
     sqrt.eval shouldBe Failure("Square root of negative number: -1.0")
   }
+
+  test("JSON print should return valid json string representation") {
+    val json = JsObjectCell(
+      "a", JsArray(JsNumber(1), JsArray(JsNumber(2), JsArray(JsNumber(3), JsArrayEmpty))),
+      JsObjectCell(
+        "b", JsArray(JsString("a"), JsArray(JsString("b"), JsArray(JsString("c"), JsArrayEmpty))),
+        JsObjectCell(
+          "c",
+          JsObjectCell("doh", JsBoolean(true),
+            JsObjectCell("ray", JsBoolean(false),
+              JsObjectCell("me", JsNumber(1), JsObjectEnd)
+            )
+          ), JsObjectEnd
+        )
+      )
+    )
+
+    json.print shouldBe
+      //      """{ "a": [1,2,3] }""".stripMargin
+      """{ "a": [1,2,3], "b": ["a","b","c"], "c": { "doh": true, "ray": false, "me": 1 } }""".stripMargin
+    //      { "a"[ : [ 1,[ 2,[ 3, ] : { "b" : [ "a",[ "b",[ "c", ] : { "c" : { "doh" : true : { "ray" : false : { "me" : 1 :  } : ] }
+  }
 }
