@@ -247,8 +247,6 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
     )
 
     json.print shouldBe
-      //      """{ "a": [1,2,3] }""".stripMargin
       """{ "a": [1,2,3], "b": ["a","b","c"], "c": { "doh": true, "ray": false, "me": 1 } }""".stripMargin
-    //      { "a"[ : [ 1,[ 2,[ 3, ] : { "b" : [ "a",[ "b",[ "c", ] : { "c" : { "doh" : true : { "ray" : false : { "me" : 1 :  } : ] }
   }
 }
