@@ -139,9 +139,9 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
   test("sum should return sum of entire IntList") {
     val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
 
-    IntListOps.sum(list) shouldBe 15
-    IntListOps.sum(list.tail) shouldBe 14
-    IntListOps.sum(End) shouldBe 0
+    list.sum shouldBe 15
+    list.tail.sum shouldBe 14
+    End.sum shouldBe 0
   }
 
   test("length should return appropriate IntList length") {
@@ -155,17 +155,17 @@ class ModelingDataWithTraitsSuite extends FunSuite with Matchers {
   test("product should return product of entire IntList") {
     val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
 
-    IntListOps.product(list) shouldBe 120
-    IntListOps.product(list.tail) shouldBe 120
-    IntListOps.product(End) shouldBe 1
+    list.product shouldBe 120
+    list.tail.product shouldBe 120
+    End.product shouldBe 1
   }
 
   test("double should return IntList with doubled entire") {
     val list = Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, End)))))
 
-    IntListOps.double(list) shouldBe Pair(2, Pair(4, Pair(6, Pair(8, Pair(10, End)))))
-    IntListOps.double(list.tail) shouldBe Pair(4, Pair(6, Pair(8, Pair(10, End))))
-    IntListOps.double(End) shouldBe End
+    list.double shouldBe Pair(2, Pair(4, Pair(6, Pair(8, Pair(10, End)))))
+    list.tail.double shouldBe Pair(4, Pair(6, Pair(8, Pair(10, End))))
+    End.double shouldBe End
   }
 
   test("Tree's sum should return sum of all nodes") {
