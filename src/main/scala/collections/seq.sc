@@ -44,3 +44,36 @@ def sortByAgeV2(ascending: Boolean = true): Seq[Director] =
     else a.yearOfBirth > b.yearOfBirth
   }
 sortByAgeV2(false)
+
+// Nolan films
+nolan.films.map(_.name)
+
+// Cinephile
+directors.flatMap(_.films.map(_.name))
+
+// Vintage McTiernan
+mcTiernan.films.foldLeft(Int.MaxValue)((a, b) => a.min(b.yearOfRelease))
+
+mcTiernan.films.sortWith { (a, b) => a.yearOfRelease < b.yearOfRelease }.headOption
+
+// High Score Table
+directors.flatMap(_.films).sortWith(_.imdbRating > _.imdbRating)
+
+val films = directors.flatMap(_.films)
+val avg = films.map(_.imdbRating).sum / films.size
+
+// Tonight’s Lis􏰂ngs
+directors.foreach { director =>
+  director.films.foreach { film =>
+    println(s"Tonight only! ${film.name} by ${director.firstName} ${director.lastName}!")
+  }
+}
+
+// From the Archives
+directors.filter(_.films.nonEmpty).map { director =>
+  director.lastName -> director.films.foldLeft(Int.MaxValue)((a, b) => a.min(b.yearOfRelease))
+}
+
+directors.flatMap { director =>
+  director.films.sortWith { (a, b) => a.yearOfRelease < b.yearOfRelease }.headOption
+}
