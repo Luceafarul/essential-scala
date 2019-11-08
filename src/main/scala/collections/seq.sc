@@ -48,8 +48,17 @@ sortByAgeV2(false)
 // Nolan films
 nolan.films.map(_.name)
 
+for {
+  film <- nolan.films
+} yield film.name
+
 // Cinephile
 directors.flatMap(_.films.map(_.name))
+
+for {
+  director <- directors
+  films <- director.films
+} yield films.name
 
 // Vintage McTiernan
 mcTiernan.films.foldLeft(Int.MaxValue)((a, b) => a.min(b.yearOfRelease))
@@ -58,6 +67,12 @@ mcTiernan.films.sortWith { (a, b) => a.yearOfRelease < b.yearOfRelease }.headOpt
 
 // High Score Table
 directors.flatMap(_.films).sortWith(_.imdbRating > _.imdbRating)
+
+val filmsForSorting = for {
+  director <- directors
+  film <- director.films
+} yield film
+filmsForSorting.sortWith(_.imdbRating > _.imdbRating)
 
 val films = directors.flatMap(_.films)
 val avg = films.map(_.imdbRating).sum / films.size
@@ -68,6 +83,11 @@ directors.foreach { director =>
     println(s"Tonight only! ${film.name} by ${director.firstName} ${director.lastName}!")
   }
 }
+
+for {
+  director <- directors
+  film <- director.films
+} println(s"Tonight only! ${film.name} by ${director.firstName} ${director.lastName}!")
 
 // From the Archives
 directors.filter(_.films.nonEmpty).map { director =>
